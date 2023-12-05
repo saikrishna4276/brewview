@@ -126,6 +126,7 @@ def register():
             msg = 'Invalid email address !'
         else:
             cursor.execute('INSERT INTO User(Email_ID,name,Contact_No,password) VALUES(%s,%s,%s,%s)', ( user_id,'user',contact_no,password, ))
+            connection.commit()
         msg = 'You have successfully registered !'
         cursor.close()
         return redirect('/')

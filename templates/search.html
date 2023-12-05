@@ -135,7 +135,7 @@
                     data.forEach(brewery => {
                         const breweryInfo = document.createElement('div');
                         breweryInfo.classList.add('brewery-info');
-                        breweryInfo.innerHTML =  `<strong>${brewery.name}</strong><br>${brewery.type}<br>${brewery.city}, ${brewery.state}`;
+                        breweryInfo.innerHTML =  `<strong>${brewery.name}</strong><br>${brewery.brewery_type}<br>${brewery.city}<br>${brewery.state}<br>${brewery.country}<br>${brewery.phone}<br>${brewery.website_url}`;
                         // provide button for every brewery
                         // const brewery = brewery.name;
                         breweryInfo.innerHTML += `
