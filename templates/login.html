@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <title>Login And Registration Form</title>
+  <link rel="stylesheet" href="../static/style3.css">
+</head>
+<body>
+  <div class="hero">
+    <div class="container">Brewery Search</div>
+<div class="form-box">
+  <div class="text1">Login</div>
+  <!-- <div class="text1">Brewery Search</div> -->
+  <div class="button-box">
+    <div id="btn"></div>
+  </div>
+  
+  <form id="login" class="input-group" name="myForm" action="" method="Post" required>
+    
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
+    <input type="text" name="Email_id" class="input-field" placeholder="Email_Id" required>
+    <input type="password" name="password" class="input-field" placeholder="Enter Password" required>
+    <button type="submit" class="submit-btn" value="submit">Log In</button>
+    <div >
+      <!-- <a href="/admin" class="admin">Admin Login</a> -->
+      <!-- <a href="/forgot_password" class="admin1">Forgot Password?</a> -->
+      <a href="/register" class="admin2">New User? Register Here</a>
+    </div>
+  </form>
+</div>
+  </div>
+
+  <script>
+    var x = document.getElementById("login")
+    var y = document.getElementById("register")
+    var z = document.getElementById("btn")
+
+    function register(){
+      x.style.left = "-400px";
+      y.style.left = "50px";
+      z.style.left = "110px";
+    }
+    function login(){
+      x.style.left = "50px";
+      y.style.left = "450px";
+      z.style.left = "0px";
+    }
+
+    
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brewery Search</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%; /* Adjust the width as needed */
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .search-bar {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+
+        .search-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .logout-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .search-button:hover {
+            background-color: #45a049;
+        }
+
+        .disclaimer {
+            font-size: 14px;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        .results {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            text-align: left;
+        }
+
+        .brewery-info {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%; /* Make each brewery-info item cover the full width */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Brewery Search</h1>
+        <form id="searchForm">
+            <input type="text" class="search-bar" id="searchInput" placeholder="Search for a brewery...">
+            <button type="button" class="search-button" onclick="searchBreweries()">Search</button>
+        </form>
+        <p class="disclaimer">Search can be done by type, name, or city.</p>
+        <div class="results" id="results"></div>
+    </div>
+    <div>
+        <form action="/logout" method="post">
+            <button type="submit" class="logout-button">Log Out</button>
+        </form>
+    </div>
+
+    <script>
+        async function searchBreweries() {
+            const searchInput = document.getElementById('searchInput').value;
+            const resultsContainer = document.getElementById('results');
+
+            // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint for brewery search
+            const apiUrl_city = `https://api.openbrewerydb.org/v1/breweries?by_city=${searchInput}`;
+            const apiUrl_name = `https://api.openbrewerydb.org/v1/breweries?by_name=${searchInput}`;
+            const apiUrl_type = `https://api.openbrewerydb.org/v1/breweries?by_type=${searchInput}`;
+            // get responses from all API endpoints and display them
+
+            
+            try {
+                const response = await fetch(apiUrl_city);
+                const data = await response.json();
+                const response2 = await fetch(apiUrl_name);
+                const data2 = await response2.json();
+                const response3 = await fetch(apiUrl_type);
+                const data3 = await response3.json();
+                data.push.apply(data, data2);
+                data.push.apply(data, data3);
+
+                console.log('API Response:', data);
+
+                // Clear previous results
+                resultsContainer.innerHTML = '';
+
+                // Display the results
+                if (data.length > 0) {
+                    data.forEach(brewery => {
+                        const breweryInfo = document.createElement('div');
+                        breweryInfo.classList.add('brewery-info');
+                        breweryInfo.innerHTML =  `<strong>${brewery.name}</strong><br>${brewery.type}<br>${brewery.city}, ${brewery.state}`;
+                        // provide button for every brewery
+                        // const brewery = brewery.name;
+                        breweryInfo.innerHTML += `
+    <br>
+    <form action="/review" method="post">
+        <input type="hidden" name="breweryName" value="${brewery.name}">
+        <button type="submit" class="search-button">Review</button>
+    </form>`;
+                        resultsContainer.appendChild(breweryInfo);
+                    });
+                } else {
+                    resultsContainer.innerHTML = 'No breweries found.';
+                }
+            } 
+            
+            catch (error) {
+                console.error('Error fetching data:', error);
+                resultsContainer.innerHTML = 'An error occurred while fetching data.';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brewery Reviews</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <h1>{{brewery_name}}</h1>
+
+    <div id="currentRating">
+        <p>Current Rating: {{ avg_rating }}/5 ({{ num_reviews }} reviews)</p>
+    </div>
+
+    <div id="reviews">
+        <h2>Reviews</h2>
+        <ul>
+            {% for review in reviews %}
+                <li>{{ review[2] }} - Rating: {{ review[3] }}/5</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="newReview">
+        <h2>Add a New Review</h2>
+        <!-- send args to flask via form -->
+        
+        <form action="/submit_review" method="post">
+            <label for="review_description">Review:</label>
+            <textarea id="review_description" name="review_description" required></textarea>
+            <input name = "breweryName" value = "{{brewery_name}}" readonly>
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" name="rating" min="1" max="5" required>
+            <button type="submit">Submit Review</button>
+        </form>
+        <form action="/search" method="post">
+            <button type="submit">Home</button>
+        </form>
+    </div>
+</body>
+</html>

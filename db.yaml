@@ -1,0 +1,4 @@
+mysql_host: 'localhost'
+mysql_user: 'root'
+mysql_password: 'Bookish@132755'
+mysql_db: 'maintenance_portal'

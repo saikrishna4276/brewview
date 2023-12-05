@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <title>Login And Registration Form</title>
+  <link rel="stylesheet" href="../static/style3.css">
+</head>
+<body>
+  <div class="hero">
+<div class="form-box">
+  <div class="text1">Register</div>
+  <div class="button-box">
+    <div id="btn"></div>
+  </div>
+  <form id="login" class="input-group" name="myForm" action="/register" method="Post" required>
+
+     
+    <input type="text" name = "User" class="input-field" placeholder="Email_Id" required >
+    <font color="red"><div id ="c2"></div></font>
+    <input type="password" id = "pas1" name = "pas1" class="input-field" placeholder="Enter Password" required onkeyup="return(valid())"><font color="red"><div id ="c1"></div></font>
+    <input type="password" id = "pas2" name = "pas2" class="input-field" placeholder="Confirm Password" value = "" required onkeyup="return check()">
+    <input type="tel" name="number"  pattern="[0-9]{10}" title="Ten digits code" class="input-field" placeholder="Contact no." required>
+    <button type="submit" class="submit-btn" onclick="window.open(search.html)" value="submit">Register</button>
+    <div >
+    </div>
+  </form>
+</div>
+  </div>
+
+  <script>
+    var x = document.getElementById("login")
+    var y = document.getElementById("register")
+    var z = document.getElementById("btn")
+
+    function register(){
+      x.style.left = "-400px";
+      y.style.left = "50px";
+      z.style.left = "110px";
+    }
+    function login(){
+      x.style.left = "50px";
+      y.style.left = "450px";
+      z.style.left = "0px";
+    }
+
+    function check()
+    {
+      var a= document.getElementById("pas1").value;
+      var b= document.getElementById("pas2").value;
+      if(a!=b)
+      {
+        document.getElementById("c1").innerHTML="Password not match";
+        return false;
+      }
+      else
+      {
+        document.getElementById("c1").innerHTML=" ";
+        return false;
+      }
+    }
+    function valid()
+      {
+        var pas1 =document.getElementById("pas1").value;
+        var lower = new RegExp('(?=.*[a-z])');
+        var upper = new RegExp('(?=.*[A-Z])');
+        var num = new RegExp('(?=.*[0-9])');
+        var spe= new RegExp('(?=.*[!@#\$%\^&\*])');
+        var len = new RegExp('(?=.{8,})');
+
+         if(len.test(pas1)&&lower.test(pas1)&&upper.test(pas1)&&spe.test(pas1)&&num.test(pas1))
+          {
+            document.getElementById("c2").style.color = 'green'
+            document.getElementById("c2").innerHTML= "you have chossen strong password"; 
+            return false;
+          }
+          else
+          {
+            document.getElementById("c2").style.color = 'red'
+            document.getElementById("c2").innerHTML= "Atleat one numeric and upper and lower and spacial chrecter and length must be atlest 8";
+            return false;
+          }
+           
+      }
+  </script>
+
+</body>
+</html>
